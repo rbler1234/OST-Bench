@@ -59,7 +59,7 @@ in integrating vision and language for complex reasoning. While most existing be
 
 - ### Data Preparation
 
-1. Download the data samples of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ost-bench/)
+1. Download the dataset of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ost-bench/).
  
 2. Unzip the image files and the json file, place them as followed:
 
