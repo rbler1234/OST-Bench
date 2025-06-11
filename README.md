@@ -43,8 +43,8 @@ in integrating vision and language for complex reasoning. While most existing be
 1. Clone Github repo.
 
    ```shell
-   git clone git@github.com:rbler1234/MMScan.git
-   cd MMScan
+   git clone https://github.com/rbler1234/OST-Bench.git
+   cd OST-Bench
    ```
 
 2. Install requirements.
