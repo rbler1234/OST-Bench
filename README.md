@@ -1,19 +1,10 @@
-<br>
-<p align="center">
-<h1 align="center"><strong>OST-Bench: An online spatial understanding benchmark</strong></h1>
+<div align="center">
 
-</p>
-</p>
-
-<div id="top" align="center">
-
-
-
+# OST-Bench
+[**🌐 Homepage**](https://rbler1234.github.io/ost-bench.github.io/)  | [**📑 Paper**](https://arxiv.org/pdf/<>) | [**💻 dataset**](https://huggingface.co/datasets/rbler/OST-Bench_v1) | [**📖 arXiv**](https://arxiv.org/abs/<>)
 </div>
 
-
-
-![demo](assets/benchmark_samples.png "demo")
+![demo](assets/teaser_new.png "demo")
 
 <!-- contents with emoji -->
 
@@ -21,20 +12,19 @@
 
 1. [About](#-about)
 2. [Getting Started](#-getting-started)
-3. [Evaluation](#-evaluation)
+3. [Evaluation](#evaluation)
 4. [Leaderboard](#-leaderboard)
-
 
 ## 🏠 About
 
 <!-- ![Teaser](assets/teaser.jpg) -->
 
 <div style="text-align: center;">
-    <img src="assets/teaser_new.png" alt="Dialogue_Teaser" width=100% >
+    <img src="assets/benchmark_samples.png" alt="Dialogue_Teaser" width=100% >
 </div>
 
 Recent advances in multimodal large language models (MLLMs) have shown remarkable capabilities
-in integrating vision and language for complex reasoning. While most existing benchmarks evaluate models under offline settings with a fixed set of pre-recorded inputs, we introduce OST-Bench, a benchmark designed to evaluate Online Spatio-Temporal understanding from the perspective of an agent actively exploring a scene.  The “Online” aspect emphasizes the need to process and reason over incrementally acquired observations, while the “Spatio-Temporal” component requires integrating current visual inputs with historical memory to support dynamic spatial reasoning. OST-Bench better reflects the challenges of real-world embodied perception. Built on an efficient data collection pipeline, OST-Bench consists of 1.4k scenes and 10k question-answer pairs collected from ScanNet, Matterport3D, and ARKitScenes. We evaluate several leading MLLMs on OST-Bench and observe a significant drop in performance on tasks requiring complex spatio-temporal reasoning, with accuracy degrading as the exploration horizon increases and memory grows under the online setting. Through further experimental analysis, we identify common error patterns across models and find that complex spatial reasoning demands and long-term memory retrieval requirements lead to a significant drop in model performance, highlighting the core challenges that must be addressed to improve online embodied reasoning. Our dataset and benchmark will be publicly released to foster further research and development in the field.
+in integrating vision and language for complex reasoning. While most existing benchmarks evaluate models under offline settings with a fixed set of pre-recorded inputs, we introduce OST-Bench, a benchmark designed to evaluate Online Spatio-Temporal understanding from the perspective of an agent actively exploring a scene.  The “Online” aspect emphasizes the need to process and reason over incrementally acquired observations, while the “Spatio-Temporal” component requires integrating current visual inputs with historical memory to support dynamic spatial reasoning. OST-Bench better reflects the challenges of real-world embodied perception. Built on an efficient data collection pipeline, OST-Bench consists of 1.4k scenes and 10k question-answer pairs collected from ScanNet, Matterport3D, and ARKitScenes. We evaluate several leading MLLMs on OST-Bench and observe that they fall short on tasks requiring complex spatio-temporal reasoning. Under the online setting, their accuracy declines as the exploration horizon extends and the memory grows. Through further experimental analysis, we identify common error patterns across models and find that both complex clue-based spatial reasoning demands and long-term memory retrieval requirements significantly drop model performance along two separate axes, highlighting the core challenges that must be addressed to improve online embodied reasoning.
 
 ## 🚀 Getting Started
 
@@ -43,12 +33,11 @@ in integrating vision and language for complex reasoning. While most existing be
 1. Clone Github repo.
 
    ```shell
-   git clone https://github.com/rbler1234/OST-Bench.git
-   cd OST-Bench
+   git clone git@github.com:rbler1234/MMScan.git
+   cd MMScan
    ```
 
 2. Install requirements.
-
 
    ```shell
    conda activate your_env_name
@@ -59,99 +48,122 @@ in integrating vision and language for complex reasoning. While most existing be
 
 - ### Data Preparation
 
-1. Download the dataset of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ost-bench/).
- 
-2. Unzip the image files and the json file, place them as followed:
+  Download the datas of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ost-bench/) / [huggingface](https://huggingface.co/datasets/rbler/OST-Bench) and unzip the image files and the json file, place them as followed:
+
+  ```
+  |-data/
+  |-- OST_bench.json
+  |-- images/
+  |----<scan_id folder>
+  ```
+
+  For more detail about the json-format data, refer to [documention](https://www.kaggle.com/datasets/jinglilin/ost-bench/).
 
 ## 👓 Evaluation
 
+### Multi-round Evaluation
 
-### Proprietary Model (GPT, Gemini, Claude)
+- #### Setup
 
+  We provide inference code compatible with both closed-source models (e.g., GPT, Gemini, Claude series) and open-source models (e.g., InternVL2.5, QwenVL2.5, LLaVA-Video, LLaVA-OneVision) on our OST-Bench.
 
-
-- #### Setup 
-
-  Before this, you need to fill in your api_key in `models/utils/openai_api.py`.
-
-  ```bash
-  API_keys = {
-    'gpt': "your_api_key",
-    'claude':"your_api_key",
-    'gemini':"your_api_key"
-   }
-  ```
+  For closed-source models, please fill in the appropriate API keys in `models/utils/openai_api.py` according to the model you plan to use. For open-source models, follow the Quickstart of [QwenVL](https://github.com/QwenLM/Qwen2.5-VL) / [InternVL](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) / [LLaVA](https://github.com/LLaVA-VL/LLaVA-NeXT/tree/main) to set up the required environment and download the corresponding checkpoints.
 
 - #### Inference
-   We provide unified inference scripts for all proprietary models.
-  ```bash
-  cd models
-  python proprietary_baseline.py --model_name gpt4o --anno_json_path /path/to/anno  --image_root /path/to/image --save_root /path/to/save
+
+  (a) To perform inference with closed-source models, run the following command:
+
+  ```shell
+  python proprietary_baseline.py --rank_num int --model_name str --save_root str
   ```
 
+  Closed-source model inference supports multi-process execution, where `rank_num` specifies the number of processes, `model_name` indicates the model to use,
+  `save_root` is the directory to save the inference results.
+
+  (b) To perform inference with open-source models, run the following command:
+
+  ```shell
+   python InternVL/LLaVA/QwenVL_baseline.py --rank_index int --rank_num int --model_path str --save_root str
+  ```
+
+  Open-source model inference also supports multi-process execution, where `rank_index` specifies the index of the current process and `model_path` is the path to the model and its weights.
+
+  (c) Our inference code groups the input data into multi-turn dialogues, where each scene corresponds to one dialogue session. These multi-turn dialogues are fed into the model to generate multi-round responses. The results will be saved in `output_dir` as multiple files named `<scan_id>.json`, each containing the model's responses for all turns in that scene, which can be used for inspection or evaluation. Welcome to implement your method under the `models/your_method.py`!
+
 - #### Evaluator
-   Use our OST evaluator to get the results.
-   ```bash
+
+  Use our OST evaluator to get the results, the evaluator will return full results over all question types and the average results across three main categories (*Agent Visible Info*, *Agent Object Spatial*，*Agent State* ) and four question formats.
+
+  ```bash
   cd evaluation
   python OST_evaluator.py --result_dir /path/to/save
   ```
 
-### Open-source Models(QwenVL-2.5, InternVL-2.5)
-- #### Setup 
+### Interleave Evaluation (VLMEvalkit)
 
-  Follow the [Quickstart of QwenVL](https://github.com/QwenLM/Qwen2.5-VL) and [Quickstart of InternVL](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) to set up the required environment and download the ckpts.
+Our OST-Bench has been integrated into VLMEvalKit. Follow the [QuickStart](https://github.com/open-compass/VLMEvalKit/blob/main/docs/en/Quickstart.md) to get started with VLMEvalKit and evaluate OST-Bench!
 
-  
+```
+LMUDATA/
+├──OST.tsv
+├──images/
+├────OST/
+├──────<scan_id folder>
+```
 
-- #### Inference
-  ```bash
-  cd models
-  python InternVL_baseline.py/QwenVL_basline.py --model_path /path/to/ckpt --anno_json_path /path/to/anno  --image_root /path/to/image --save_root /path/to/save
-  ```
+Place the images under `LMUDATA`.When using VLMEvalKit to evaluate OST-Bench, When evaluating the performance of models `llava/qwenvl/InternVL` series, set `max_new_tokens` to 4096 to ensure complete reproducibility of the results.  Additionally, when using the LLaVA_OneVision series of models, set `self.model.config.image_aspect_ratio` = 'pt'  (under `vlmeval/vlm/llava/llava.py`).
 
-- #### Evaluator
-   Use our OST evaluator to get the results.
-   ```bash
-  cd evaluation
-  python OST_evaluator.py --result_dir /path/to/save
-  ```
+Run the following command to perform evaluation:
 
+```shell
+python run.py --model GPT-4o --data OST
+```
 
+*Note*: As most VLMEvalKit models do not support multi-turn inference, we provide an interleaved version of OST-Bench, where each sample merges the system prompt, history, and current question into a single turn. Evaluation results may slightly differ from true multi-round settings.
 
+## 🏆 Leaderboard
 
-## 🏆 Leaderboard 
+## multi-round version
 
+|                            | Overall | A-State | A-info | AO-Spatial | Judge  | Temp-Loc | Cnt.   | Esti.  |
+|----------------------------|---------|---------|--------|------------|--------|----------|--------|--------|
+| Proprietary                |         |         |        |            |        |          |        |        |
+|      Claude-3.5-Sonnet     | 47.77   | 45.55   | 65.56  | 32.85      | 57.37  | 46.73    | 57.90  | 26.85  |
+|      Gemimi-2.0-Flash      | 49.54   | 45.05   | 70.82  | 33.80      | 61.11  | 45.83    | 59.40  | 28.10  |
+| Gemimi-2.0-Flash(Thinking) | 54.25   | 47.05   | 72.30  | 42.75      | 63.61  | 61.10    | 61.90  | 28.93  |
+|           GPT-4o           | 48.72   | 38.83   | 72.76  | 33.52      | 59.83  | 48.57    | 59.80  | 23.98  |
+|           GPT-4.1          | 53.40   | 47.23   | 76.46  | 37.65      | 66.44  | 51.67    | 60.60  | 29.10  |
+| Open-Source                |         |         |        |            |        |          |        |        |
+|       InternVL-2.5-8B      | 38.98   | 41.88   | 52.78  | 29.18      | 52.34  | 22.50    | 55.40  | 29.30  |
+|      InternVL-2.5-38B      | 50.78   | 45.38   | 73.88  | 33.95      | 61.39  | 45.93    | 61.10  | 31.50  |
+|      InternVL-2.5-78B      | 51.08   | 46.45   | 74.02  | 32.93      | 61.51  | 47.07    | 65.90  | 28.95  |
+|        QwenVL-2.5-7B       | 41.16   | 40.43   | 52.56  | 31.53      | 50.13  | 36.60    | 62.10  | 22.73  |
+|       QwenVL-2.5-32B       | 46.86   | 43.75   | 64.90  | 32.18      | 55.44  | 42.93    | 59.20  | 29.13  |
+|       QwenVL-2.5-72B       | 45.62   | 43.48   | 64.46  | 28.87      | 55.91  | 41.63    | 61.50  | 22.90  |
+|       LLaVA-Video-7B       | 39.28   | 33.50   | 58.32  | 28.80      | 52.77  | 33.80    | 63.10  | 16.13  |
+|       LLaVA-Video-72B      | 43.22   | 39.95   | 60.48  | 35.07      | 56.01  | 37.57    | 51.00  | 29.20  |
+|     LLaVA-Onevision-7B     | 40.36   | 31.08   | 55.24  | 33.63      | 51.24  | 32.47    | 66.90  | 19.83  |
+|     LLaVA-Onevision-72B    | 43.44   | 38.88   | 61.60  | 36.23      | 58.83  | 39.23    | 45.80  | 26.40  |
+| Baseline                   |         |         |        |            |        |          |        |        |
+|         Human-Level        | 84.05   | 74.83   | 93.40  | 81.02      | 92.99  | 94.17    | 91.30  | 56.93  |
+|        Chance-Level        | 35.73   | 44.28   | 32.42  | 35.72      | 40.00  | 31.17    | 25.00  | 38.75  |
 
+## VLMEvalkit interleave version
 
-
-| Methods                    | Agent State |       |             |       | Agent Visible Info |       |          |           |       | Agent-object Spatial  |       |       |          |       |       |
-|----------------------------|:-----------:|:-----:|:-----------:|:-----:|:------------------:|:-----:|:--------:|:---------:|:-----:|:---------------------:|:-----:|:-----:|:--------:|:-----:|:-----:|
-|                            |   Position  |       | Orientation |       |      Existence     |       | Quantity | Diversity | Order |       Direction       |       |       | Distance |       |       |
-|                            |     JUD.    |  EST. |     JUD.    |  EST. |        JUD.        | TEMP. |   CNT.   |    JUD.   |  JUD. |          JUD.         | TEMP. |  EST. |   JUD.   | TEMP. |  EST. |
-| Proprietary                |             |       |             |       |                    |       |          |           |       |                       |       |       |          |       |       |
-| Claude-3.5-Sonnet          |    55.4     | 32.5  |    54.0     | 26.4  |        79.0        | 61.0  |   51.8   |   75.9    | 59.7  |         43.8          | 15.4  | 22.5  |   47.7   | 55.9  | 19.9  |
-| Gemini-2.0-Flash           |    56.4     | 24.4  |    47.2     | 30.4  |        85.0        | 66.9  |   51.3   |   70.5    | 56.4  |         43.4          | 16.7  | 23.9  |   48.5   | 45.3  | 28.6  |
-| Gemini-2.0-Flash(thinking) |    57.1     | 24.3  |    59.2     | 26.6  |        81.5        | 75.8  |   52.8   |   69.6    | 62.8  |         51.7          | 34.4  | 28.2  |   47.4   | 57.7  | 23.5  |
-| GPT-4o                     |    59.9     | 20.7  |    50.0     | 27.0  |        84.2        | 71.8  |   50.4   |   74.6    | 58.1  |         45.1          | 19.7  | 23.6  |   44.2   | 51.5  | 22.6  |
-| GPT-4.1                    |    69.3     | 30.1  |    59.9     | 28.4  |        84.1        | 77.1  |   53.4   |   78.6    | 66.2  |         52.4          | 18.4  | 23.3  |   46.8   | 50.9  | 23.9  |
-| Open-source                |             |       |             |       |                    |       |          |           |       |                       |       |       |          |       |       |
-| InternVL-2.5-8B            |    54.2     | 24.5  |    52.8     | 38.6  |        81.3        | 18.1  |   45.0   |   59.4    | 43.3  |         35.9          | 10.3  | 21.7  |   43.4   | 27.5  | 27.1  |
-| InternVL-2.5-38B           |    64.6     | 31.3  |    56.5     | 34.0  |        86.7        | 70.6  |   50.6   |   73.9    | 53.2  |         42.4          | 17.8  | 28.4  |   44.5   | 44.0  | 29.0  |
-| InternVL-2.5-78B           |    61.7     | 33.5  |    51.8     | 34.0  |        85.2        | 70.8  |   54.0   |   77.7    | 50.5  |         42.6          | 20.7  | 17.6  |   46.5   | 43.6  | 20.9  |
-| QwenVL-2.5-8B              |    56.1     | 13.6  |    53.3     | 37.3  |        76.3        | 32.4  |   48.2   |   56.9    | 31.7  |         41.2          | 28.2  | 13.2  |   46.0   | 47.5  | 18.6  |
-| QwenVL-2.5-32B             |    59.2     | 29.6  |    55.4     | 37.8  |        81.0        | 61.5  |   47.6   |   73.6    | 40.3  |         40.9          | 23.0  | 27.2  |   48.8   | 44.5  | 19.5  |
-| QwenVL-2.5-72B             |    62.2     | 26.2  |    50.5     | 32.2  |        79.9        | 61.0  |   45.0   |   74.6    | 30.4  |         43.2          | 15.6  |  5.7  |   44.9   | 44.3  | 19.1  |
-| LLaVA-Video-7B             |    53.3     | 25.2  |    50.6     | 10.9  |        85.0        | 31.0  |   50.8   |   59.7    | 38.3  |         36.0          | 31.0  | 16.4  |   38.8   | 40.8  |  9.7  |
-| LLaVA-Video-72B            |    50.6     | 19.5  |    50.8     | 38.8  |        84.3        | 37.1  |   30.8   |   70.0    | 45.9  |         40.3          | 26.2  | 23.1  |   44.2   | 48.8  | 23.8  |
-| LLaVA-Onevision-7B         |    51.8     | 10.0  |    46.3     |  5.8  |        84.9        | 34.7  |   54.6   |   49.2    | 30.8  |         35.0          | 30.7  | 40.2  |   41.5   | 36.9  | 19.8  |
-| LLaVA-Onevision-72B         |    55.8     | 18.8  |    49.3     | 33.4  |        85.0        | 46.6  |   37.2   |   71.3    | 48.8  |         38.4          | 21.3  | 27.1  |   50.9   | 50.2  | 29.2  |
-| Baseline                   |             |       |             |       |                    |       |          |           |       |                       |       |       |          |       |       |
-| Human-Level                |     93.2    |  58.9 |     92.8    |  54.4 |        95.7        |  94.7 |   91.3   |    94.4   |  90.9 |          90.5         |  93.3 |  54.3 |   93.4   |  94.5 |  60.1 |
-| Chance-Level               |     50.0    |  37.8 |     50.0    |  39.3 |        50.0        |  29.1 |   25.0   |    33.0   |  25.0 |          36.0         |  33.2 |  47.6 |   36.0   |  31.2 |  30.3 |
-|                            |             |       |             |       |                    |       |          |           |       |                       |       |       |          |       |       |
-|                            |             |       |             |       |                    |       |          |           |       |                       |       |       |          |       |       |
+|                     | Overall | A-State | A-info | AO-Spatial | Judge | Temp-Loc | Cnt.  | Esti. |
+|---------------------|---------|---------|--------|------------|-------|----------|-------|-------|
+|        GPT-4o       | 51.19   | 41.76   | 71.52  | 37.16      | 62.23 | 48.51    | 63.16 | 29.26 |
+|       GPT-4.1       | 50.96   | 43.61   | 71.24  | 35.58      | 64.43 | 47.75    | 62.83 | 25.72 |
+|   InternVL-2.5-8B   | 35.32   | 31.94   | 44.69  | 28.22      | 48.32 | 35.71    | 43.95 | 12.75 |
+|   InternVL-2.5-38B  | 48.54   | 43.11   | 64.66  | 36.05      | 58.97 | 42.88    | 62.42 | 32.22 |
+|   InternVL-2.5-78B  | 47.94   | 44.53   | 65.92  | 32.24      | 59.52 | 42.19    | 65.29 | 27.23 |
+|    QwenVL-2.5-8B    | 41.07   | 33.66   | 56.55  | 30.53      | 52.75 | 42       | 59.87 | 12.72 |
+|    QwenVL-2.5-32B   | 47.33   | 42.24   | 64.66  | 33.38      | 58.26 | 45.27    | 57.32 | 26.75 |
+|    LLaVA-Video-7B   | 33.76   | 27.07   | 46.99  | 24.99      | 50.95 | 20.59    | 60.51 | 9     |
+|   LLaVA-Video-72B   | 45.93   | 35.22   | 63.04  | 35.95      | 56.58 | 44.15    | 60.19 | 25.34 |
+|  LLaVA-Onevision-7B | 34.92   | 29.02   | 50.31  | 23.46      | 52.24 | 26.29    | 61.15 | 7.27  |
+| LLaVA-Onevision-72B | 44.59   | 36.37   | 59.86  | 34.81      | 55.91 | 42.02    | 59.24 | 23.93 |
 
 ## 📝 TODO List
 
 - \[ \] Full-code release.
-
