@@ -1,7 +1,7 @@
 <div align="center">
 
 # OST-Bench
-[**🌐 Homepage**](https://rbler1234.github.io/ost-bench.github.io/)  | [**📑 Paper**](https://arxiv.org/pdf/<>) | [**💻 dataset**](https://huggingface.co/datasets/rbler/OST-Bench_v1) | [**📖 arXiv**](https://arxiv.org/abs/<>)
+[**🌐 Homepage**](https://rbler1234.github.io/OSTBench.github.io/)  | [**📑 Paper**](https://arxiv.org/pdf/<>) | [**💻 dataset**](https://huggingface.co/datasets/rbler/OST-Bench_v1) | [**📖 arXiv**](https://arxiv.org/abs/<>)
 </div>
 
 ![demo](assets/teaser_new.png "demo")
@@ -33,8 +33,8 @@ in integrating vision and language for complex reasoning. While most existing be
 1. Clone Github repo.
 
    ```shell
-   git clone git@github.com:rbler1234/MMScan.git
-   cd MMScan
+   git clone https://github.com/rbler1234/OST-Bench.git
+   cd OST-Bench
    ```
 
 2. Install requirements.
