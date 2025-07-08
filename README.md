@@ -1,6 +1,6 @@
 <div align="center">
 
-# OST-Bench
+# OST-Bench:  Evaluating the Capabilities of MLLMs in Online Spatio-temporal Scene Understanding
 [**🌐 Homepage**](https://rbler1234.github.io/OSTBench.github.io/)  | [**📑 Paper**](https://arxiv.org/pdf/<>) | [**💻 dataset**](https://huggingface.co/datasets/rbler/OST-Bench_v1) | [**📖 arXiv**](https://arxiv.org/abs/<>)
 </div>
 
@@ -28,7 +28,7 @@ in integrating vision and language for complex reasoning. While most existing be
 
 ## 🚀 Getting Started
 
-- ### Installation
+### Installation
 
 1. Clone Github repo.
 
@@ -46,7 +46,7 @@ in integrating vision and language for complex reasoning. While most existing be
 
    *Note:* If you want to evaluate open-source models, you need to set up their corresponding environments.
 
-- ### Data Preparation
+### Data Preparation
 
   Download the datas of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ost-bench/) / [huggingface](https://huggingface.co/datasets/rbler/OST-Bench) and unzip the image files and the json file, place them as followed:
 
@@ -63,34 +63,33 @@ in integrating vision and language for complex reasoning. While most existing be
 
 ### Multi-round Evaluation
 
-- #### Setup
-
+#### Setup
   We provide inference code compatible with both closed-source models (e.g., GPT, Gemini, Claude series) and open-source models (e.g., InternVL2.5, QwenVL2.5, LLaVA-Video, LLaVA-OneVision) on our OST-Bench.
 
   For closed-source models, please fill in the appropriate API keys in `models/utils/openai_api.py` according to the model you plan to use. For open-source models, follow the Quickstart of [QwenVL](https://github.com/QwenLM/Qwen2.5-VL) / [InternVL](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) / [LLaVA](https://github.com/LLaVA-VL/LLaVA-NeXT/tree/main) to set up the required environment and download the corresponding checkpoints.
 
-- #### Inference
+#### Inference
 
-  (a) To perform inference with closed-source models, run the following command:
+1. To perform inference with closed-source models, run the following command:
 
-  ```shell
-  python proprietary_baseline.py --rank_num int --model_name str --save_root str
-  ```
+    ```shell
+    python proprietary_baseline.py --rank_num int --model_name str --save_root str
+    ```
 
-  Closed-source model inference supports multi-process execution, where `rank_num` specifies the number of processes, `model_name` indicates the model to use,
-  `save_root` is the directory to save the inference results.
+    Closed-source model inference supports multi-process execution, where `rank_num` specifies the number of processes, `model_name` indicates the model to use,
+    `save_root` is the directory to save the inference results.
 
-  (b) To perform inference with open-source models, run the following command:
+2.  To perform inference with open-source models, run the following command:
 
-  ```shell
-   python InternVL/LLaVA/QwenVL_baseline.py --rank_index int --rank_num int --model_path str --save_root str
-  ```
+    ```shell
+    python InternVL/LLaVA/QwenVL_baseline.py --rank_index int --rank_num int --model_path str --save_root str
+    ```
 
-  Open-source model inference also supports multi-process execution, where `rank_index` specifies the index of the current process and `model_path` is the path to the model and its weights.
+    Open-source model inference also supports multi-process execution, where `rank_index` specifies the index of the current process and `model_path` is the path to the model and its weights.
 
-  (c) Our inference code groups the input data into multi-turn dialogues, where each scene corresponds to one dialogue session. These multi-turn dialogues are fed into the model to generate multi-round responses. The results will be saved in `output_dir` as multiple files named `<scan_id>.json`, each containing the model's responses for all turns in that scene, which can be used for inspection or evaluation. Welcome to implement your method under the `models/your_method.py`!
+3.  Our inference code groups the input data into multi-turn dialogues, where each scene corresponds to one dialogue session. These multi-turn dialogues are fed into the model to generate multi-round responses. The results will be saved in `output_dir` as multiple files named `<scan_id>.json`, each containing the model's responses for all turns in that scene, which can be used for inspection or evaluation. Welcome to implement your method under the `models/your_method.py`!
 
-- #### Evaluator
+#### Evaluator
 
   Use our OST evaluator to get the results, the evaluator will return full results over all question types and the average results across three main categories (*Agent Visible Info*, *Agent Object Spatial*，*Agent State* ) and four question formats.
 
@@ -99,7 +98,7 @@ in integrating vision and language for complex reasoning. While most existing be
   python OST_evaluator.py --result_dir /path/to/save
   ```
 
-### Interleave Evaluation (VLMEvalkit)
+### Interleaved Evaluation (VLMEvalkit)
 
 Our OST-Bench has been integrated into VLMEvalKit. Follow the [QuickStart](https://github.com/open-compass/VLMEvalKit/blob/main/docs/en/Quickstart.md) to get started with VLMEvalKit and evaluate OST-Bench!
 
@@ -123,7 +122,7 @@ python run.py --model GPT-4o --data OST
 
 ## 🏆 Leaderboard
 
-## multi-round version
+## Multi-round Version
 
 |                            | Overall | A-State | A-info | AO-Spatial | Judge  | Temp-Loc | Cnt.   | Esti.  |
 |----------------------------|---------|---------|--------|------------|--------|----------|--------|--------|
@@ -148,7 +147,7 @@ python run.py --model GPT-4o --data OST
 |         Human-Level        | 84.05   | 74.83   | 93.40  | 81.02      | 92.99  | 94.17    | 91.30  | 56.93  |
 |        Chance-Level        | 35.73   | 44.28   | 32.42  | 35.72      | 40.00  | 31.17    | 25.00  | 38.75  |
 
-## VLMEvalkit interleave version
+## VLMEvalkit Interleaved Version
 
 |                     | Overall | A-State | A-info | AO-Spatial | Judge | Temp-Loc | Cnt.  | Esti. |
 |---------------------|---------|---------|--------|------------|-------|----------|-------|-------|
