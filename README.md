@@ -1,7 +1,7 @@
 <div align="center">
 
 # OST-Bench:  Evaluating the Capabilities of MLLMs in Online Spatio-temporal Scene Understanding
-[**🌐 Homepage**](https://rbler1234.github.io/OSTBench.github.io/)  | [**📑 Paper**](https://arxiv.org/pdf/<>) | [**💻 dataset**](https://huggingface.co/datasets/rbler/OST-Bench_v1) | [**📖 arXiv**](https://arxiv.org/abs/<>)
+[**🌐 Homepage**](https://rbler1234.github.io/OSTBench.github.io/)  | [**📑 Paper**](https://arxiv.org/pdf/2507.07984) | [**🤗 dataset**](https://huggingface.co/datasets/rbler/OST-Bench_v1) | [**📖 arXiv**](https://arxiv.org/abs/2507.07984)
 </div>
 
 ![demo](assets/teaser_new.png "demo")
@@ -10,10 +10,16 @@
 
 ## 📋 Contents
 
-1. [About](#-about)
-2. [Getting Started](#-getting-started)
-3. [Evaluation](#evaluation)
-4. [Leaderboard](#-leaderboard)
+1. [News](#🔔-news)
+2. [About](#🏠-about)
+3. [Getting Started](#🚀-getting-started)
+4. [Evaluation](#👓-evaluation)
+5. [Leaderboard](#🏆-leaderboard)
+
+## 🔔 News
+🔥[2025-07]: OST-Bench has been supported in the VLMEvalKit repository.
+
+🔥[2025-07]: We released our paper, benchmark, and evaluation codes.
 
 ## 🏠 About
 
@@ -57,7 +63,7 @@ in integrating vision and language for complex reasoning. While most existing be
   |----<scan_id folder>
   ```
 
-  For more detail about the json-format data, refer to [documention](https://www.kaggle.com/datasets/jinglilin/ost-bench/).
+  For more detail about the json-format data, refer to [documention](https://huggingface.co/datasets/rbler/OST-Bench).
 
 ## 👓 Evaluation
 
@@ -163,6 +169,33 @@ python run.py --model GPT-4o --data OST
 |  LLaVA-Onevision-7B | 34.92   | 29.02   | 50.31  | 23.46      | 52.24 | 26.29    | 61.15 | 7.27  |
 | LLaVA-Onevision-72B | 44.59   | 36.37   | 59.86  | 34.81      | 55.91 | 42.02    | 59.24 | 23.93 |
 
-## 📝 TODO List
 
-- \[ \] Full-code release.
+## 🔗 Citation
+
+```bibtex
+@article{lin2025ostbench,
+  title={OST-Bench: Evaluating the Capabilities of MLLMs in Online Spatio-temporal Scene Understanding},
+  author={JingLi Lin and Chenming Zhu and Runsen Xu and Xiaohan Mao and Xihui Liu and Tai Wang and Jiangmiao Pang},
+  journal={arXiv preprint arXiv:2507.07984},
+  year={2025}
+}
+```
+
+## 📄 License
+
+Shield: [![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial 4.0 International License][cc-by-nc].
+
+[![CC BY-NC 4.0][cc-by-nc-image]][cc-by-nc]
+
+[cc-by-nc]: https://creativecommons.org/licenses/by-nc/4.0/
+[cc-by-nc-image]: https://licensebuttons.net/l/by-nc/4.0/88x31.png
+[cc-by-nc-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg
+
+## Acknowledgment
+OST-Bench utilizes data from the following open-source datasets: ScanNet, Matterport3D, and ARKitScenes. We sincerely thank the respective teams for their valuable contributions to the research community.
+
+## Contact
+- Jingli Lin: linjingli166@gmail.com
