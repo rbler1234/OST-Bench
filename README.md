@@ -54,7 +54,7 @@ in integrating vision and language for complex reasoning. While most existing be
 
 ### Data Preparation
 
-  Download the datas of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ost-bench/) / [huggingface](https://huggingface.co/datasets/rbler/OST-Bench) and unzip the image files and the json file, place them as followed:
+  Download the datas of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ostbench/) / [huggingface](https://huggingface.co/datasets/rbler/OST-Bench) and unzip the image files and the json file, place them as followed:
 
   ```
   |-data/
