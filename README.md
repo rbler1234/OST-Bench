@@ -39,7 +39,7 @@ in integrating vision and language for complex reasoning. While most existing be
 1. Clone Github repo.
 
    ```shell
-   git clone https://github.com/rbler1234/OST-Bench.git
+   git clone https://github.com/OpenRobotLab/OST-Bench.git
    cd OST-Bench
    ```
 
