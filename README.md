@@ -121,7 +121,7 @@ Place the images under `LMUDATA`.When using VLMEvalKit to evaluate OST-Bench, Wh
 Run the following command to perform evaluation:
 
 ```shell
-python run.py --model GPT-4o --data OST
+python run.py --model GPT4o --data OST
 ```
 
 *Note*: As most VLMEvalKit models do not support multi-turn inference, we provide an interleaved version of OST-Bench, where each sample merges the system prompt, history, and current question into a single turn. Evaluation results may slightly differ from true multi-round settings.
