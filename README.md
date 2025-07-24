@@ -39,7 +39,7 @@ in integrating vision and language for complex reasoning. While most existing be
 1. Clone Github repo.
 
    ```shell
-   git clone https://github.com/rbler1234/OST-Bench.git
+   git clone https://github.com/OpenRobotLab/OST-Bench.git
    cd OST-Bench
    ```
 
@@ -54,7 +54,7 @@ in integrating vision and language for complex reasoning. While most existing be
 
 ### Data Preparation
 
-  Download the datas of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ost-bench/) / [huggingface](https://huggingface.co/datasets/rbler/OST-Bench) and unzip the image files and the json file, place them as followed:
+  Download the datas of OST-Bench from [kaggle](https://www.kaggle.com/datasets/jinglilin/ostbench/) / [huggingface](https://huggingface.co/datasets/rbler/OST-Bench) and unzip the image files and the json file, place them as followed:
 
   ```
   |-data/
@@ -121,7 +121,7 @@ Place the images under `LMUDATA`.When using VLMEvalKit to evaluate OST-Bench, Wh
 Run the following command to perform evaluation:
 
 ```shell
-python run.py --model GPT-4o --data OST
+python run.py --model GPT4o --data OST
 ```
 
 *Note*: As most VLMEvalKit models do not support multi-turn inference, we provide an interleaved version of OST-Bench, where each sample merges the system prompt, history, and current question into a single turn. Evaluation results may slightly differ from true multi-round settings.
