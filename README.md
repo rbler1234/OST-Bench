@@ -13,10 +13,13 @@
 1. [News](#🔔-news)
 2. [About](#🏠-about)
 3. [Getting Started](#🚀-getting-started)
-4. [Evaluation](#👓-evaluation)
-5. [Leaderboard](#🏆-leaderboard)
+4. [Data Generation](#⚙️-data-generation)
+5. [Evaluation](#👓-evaluation)
+6. [Leaderboard](#🏆-leaderboard)
 
 ## 🔔 News
+🔥[2025-08]: We released the [data generation code](./data_generation/README.md) and the training split of OST-Bench.
+
 🔥[2025-07]: OST-Bench has been supported in the VLMEvalKit repository.
 
 🔥[2025-07]: We released our paper, benchmark, and evaluation codes.
@@ -64,6 +67,9 @@ in integrating vision and language for complex reasoning. While most existing be
   ```
 
   For more detail about the json-format data, refer to [documention](https://huggingface.co/datasets/rbler/OST-Bench).
+
+## ⚙️ Data Generation
+To generation our OST-Bench data from base datasets and annotations, please refer to the [code](./data_generation/README.md) under `./data_generation`.
 
 ## 👓 Evaluation
 
